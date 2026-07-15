@@ -8,15 +8,24 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://exemploportal.softaliza.com.br"),
+  metadataBase: new URL("https://exemploportal.vercel.app"),
   title: "Exemplo Portal Softaliza — Modelos para grandes associações",
   description: "Portal único de demonstrações da Softaliza, com propostas personalizadas por associação.",
+  // Demonstrações comerciais reproduzem marca e conteúdo de entidades reais:
+  // nenhuma rota pode ser indexada nem aparecer no Google concorrendo com o
+  // site oficial do cliente. Vale para todas as rotas do portal.
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false, noimageindex: true },
+  },
   openGraph: {
     title: "Exemplo Portal Softaliza — Modelos para grandes associações",
     description: "Portal demonstrativo com propostas personalizadas por associação.",
     type: "website",
     locale: "pt_BR",
-    url: "https://exemploportal.softaliza.com.br",
+    url: "https://exemploportal.vercel.app",
     siteName: "Exemplo Portal Softaliza",
     images: [{
       url: "/og.png",

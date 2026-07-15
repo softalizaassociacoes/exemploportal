@@ -2,9 +2,29 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./sbmh.module.css";
 
+// O openGraph precisa ser declarado aqui: sem isso a rota herda o do layout
+// raiz e o link compartilhado (WhatsApp/e-mail) chega à SBMH anunciando o
+// portal modelo genérico, e não a proposta dela.
 export const metadata: Metadata = {
   title: "SBMH — Sociedade Brasileira de Medicina Marítima e Hiperbárica",
-  description: "Proposta de novo portal institucional para a SBMH.",
+  description:
+    "Proposta visual da Softaliza: MVP do novo portal institucional da Sociedade Brasileira de Medicina Marítima e Hiperbárica.",
+  openGraph: {
+    title: "SBMH — MVP do novo portal institucional",
+    description:
+      "Proposta visual preparada pela Softaliza para a Sociedade Brasileira de Medicina Marítima e Hiperbárica.",
+    type: "website",
+    locale: "pt_BR",
+    url: "https://exemploportal.vercel.app/sbmh",
+    siteName: "Proposta Softaliza — SBMH",
+    images: [{ url: "/sbmh/og.png", width: 1200, height: 630, alt: "MVP do novo portal da SBMH — proposta Softaliza" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SBMH — MVP do novo portal institucional",
+    description: "Proposta visual preparada pela Softaliza para a SBMH.",
+    images: ["/sbmh/og.png"],
+  },
 };
 
 const official = "https://sbmh.com.br";
@@ -23,14 +43,58 @@ const news = [
   ["Defesa profissional", "SBMH celebra o reconhecimento da área de atuação", "18 DEZ 2025"],
 ];
 
+// Eventos e documentos reais publicados hoje em sbmh.com.br. A agenda pública
+// da SBMH está sem edições futuras — por isso os rótulos de status são os
+// verdadeiros, sem inventar datas que a Sociedade não anunciou.
+const agenda = [
+  {
+    tag: "Congresso",
+    status: "Edição realizada",
+    title: "10º Congresso Brasileiro de Medicina Hiperbárica & 2º Congresso Brasileiro de Medicina Marítima",
+    place: "Canela · Rio Grande do Sul",
+    date: "16 a 18 de outubro de 2025",
+    featured: true,
+  },
+  {
+    tag: "Formação",
+    status: "Curso permanente",
+    title: "Curso de Medicina Hiperbárica do Rio de Janeiro",
+    place: "Rio de Janeiro · RJ",
+    date: "Turmas divulgadas pela Secretaria",
+  },
+  {
+    tag: "Formação",
+    status: "Curso permanente",
+    title: "9º Curso de Oxigenoterapia Hiperbárica OHB Minas Gerais",
+    place: "Minas Gerais · MG",
+    date: "Turmas divulgadas pela Secretaria",
+  },
+];
+
+const library = [
+  ["Diretrizes", "Diretrizes de Utilização da OHB", "Referência técnica para indicação e conduta.", `${official}/sobre/diretrizes-de-utilizacao-da-ohb/`],
+  ["Resolução", "Resolução CFM", "Marco regulatório da atuação em medicina hiperbárica.", `${official}/sobre/resolucao-cfm/`],
+  ["Institucional", "Estatuto da SBMH", "Norma interna, finalidades e governança da Sociedade.", `${official}/sobre/estatuto-sbmh/`],
+  ["Notas técnicas", "Posicionamentos da SBMH", "Manifestações oficiais sobre temas da especialidade.", `${official}/noticias/`],
+];
+
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>;
 }
 
+// O logo oficial da SBMH vem em branco, para aplicação sobre fundo escuro.
+// Em fundo claro (header) é preciso usar a variante navy, senão a marca
+// simplesmente não aparece.
 function Brand({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
   return (
     <span className={`${styles.brand} ${light ? styles.brandLight : ""} ${compact ? styles.brandCompact : ""}`}>
-      <Image src="/sbmh/logo.svg" alt="SBMH — Sociedade Brasileira de Medicina Marítima e Hiperbárica" width={262} height={82} priority />
+      <Image
+        src={light ? "/sbmh/logo.svg" : "/sbmh/logo-navy.svg"}
+        alt="SBMH — Sociedade Brasileira de Medicina Marítima e Hiperbárica"
+        width={262}
+        height={82}
+        priority
+      />
     </span>
   );
 }
@@ -58,8 +122,9 @@ export default function SbmhProposal() {
           <nav aria-label="Navegação principal">
             <a href="#sociedade">A SBMH</a>
             <a href="#medicina">Medicina Hiperbárica</a>
-            <a href="#indicacoes">Indicações</a>
             <a href="#encontre">Clínicas e Médicos</a>
+            <a href="#agenda">Agenda</a>
+            <a href="#biblioteca">Biblioteca</a>
             <a href="#noticias">Notícias</a>
             <a href="#duvidas">Dúvidas</a>
           </nav>
@@ -69,7 +134,7 @@ export default function SbmhProposal() {
           </div>
           <details className={styles.mobileMenu}>
             <summary>Menu</summary>
-            <nav><a href="#sociedade">A SBMH</a><a href="#medicina">Medicina Hiperbárica</a><a href="#indicacoes">Indicações</a><a href="#encontre">Clínicas e Médicos</a><a href="#noticias">Notícias</a><a href="#duvidas">Dúvidas</a><a href={memberArea}>Área do associado</a></nav>
+            <nav><a href="#sociedade">A SBMH</a><a href="#medicina">Medicina Hiperbárica</a><a href="#indicacoes">Indicações</a><a href="#encontre">Clínicas e Médicos</a><a href="#agenda">Agenda</a><a href="#biblioteca">Biblioteca</a><a href="#noticias">Notícias</a><a href="#duvidas">Dúvidas</a><a href={memberArea}>Área do associado</a></nav>
           </details>
         </div>
       </header>
@@ -178,6 +243,30 @@ export default function SbmhProposal() {
         </div>
       </section>
 
+      <section className={styles.agenda} id="agenda">
+        <div className={`${styles.shell} ${styles.sectionHeading} ${styles.darkHeading}`}>
+          <div><p className={styles.sectionLabel}>Cursos e eventos</p><h2>Agenda científica e <em>formação continuada.</em></h2></div>
+          <a href={`${official}/eventos/`} target="_blank" rel="noreferrer">Ver a agenda completa <Arrow /></a>
+        </div>
+        <div className={`${styles.shell} ${styles.agendaGrid}`}>
+          {agenda.map((ev) => (
+            <article key={ev.title} className={ev.featured ? styles.agendaFeatured : ""}>
+              <div className={styles.agendaTop}>
+                <span className={styles.agendaTag}>{ev.tag}</span>
+                <span className={styles.agendaStatus}>{ev.status}</span>
+              </div>
+              <h3>{ev.title}</h3>
+              <dl className={styles.agendaMeta}>
+                <div><dt>Local</dt><dd>{ev.place}</dd></div>
+                <div><dt>Data</dt><dd>{ev.date}</dd></div>
+              </dl>
+              <a href={`${official}/eventos/`} target="_blank" rel="noreferrer">Ver o evento <Arrow /></a>
+            </article>
+          ))}
+        </div>
+        <p className={`${styles.shell} ${styles.agendaNote}`}>A agenda é publicada e mantida pela própria Secretaria, com página individual por evento e inscrição integrada.</p>
+      </section>
+
       <section className={styles.news} id="noticias">
         <div className={`${styles.shell} ${styles.sectionHeading} ${styles.darkHeading}`}>
           <div><p className={styles.sectionLabel}>Atualização e posicionamento</p><h2>Notícias da <em>SBMH.</em></h2></div>
@@ -192,6 +281,28 @@ export default function SbmhProposal() {
               <div className={styles.newsCopy}><p><span>{tag}</span>{date}</p><h3>{title}</h3><a href={`${official}/noticias/`} target="_blank" rel="noreferrer">Ler notícia <Arrow /></a></div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.library} id="biblioteca">
+        <div className={`${styles.shell} ${styles.libraryGrid}`}>
+          <div className={styles.libraryIntro}>
+            <p className={styles.sectionLabel}>Biblioteca institucional</p>
+            <h2>Documentos oficiais, sempre no mesmo lugar.</h2>
+            <p>Notas técnicas, resoluções, diretrizes e documentos institucionais reunidos em uma biblioteca pública, com busca e categorias — atualizada pela Secretaria, sem depender de fornecedor.</p>
+            <a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`} target="_blank" rel="noreferrer">Ver todos os documentos <Arrow /></a>
+          </div>
+          <ul className={styles.libraryList}>
+            {library.map(([tag, title, text, href]) => (
+              <li key={title}>
+                <a href={href} target="_blank" rel="noreferrer">
+                  <span className={styles.libraryIcon} aria-hidden="true">PDF</span>
+                  <div><span className={styles.libraryTag}>{tag}</span><strong>{title}</strong><small>{text}</small></div>
+                  <Arrow diagonal />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -219,7 +330,7 @@ export default function SbmhProposal() {
       <section className={styles.partnership}>
         <div className={`${styles.shell} ${styles.partnershipGrid}`}>
           <div className={styles.uhmsLogo}><Image src="/sbmh/uhms.png" alt="Parceria SBMH e Undersea and Hyperbaric Medical Society" width={240} height={240} /></div>
-          <div><p className={styles.sectionLabel}>Conexão internacional</p><h2>Parceria entre a SBMH e a UHMS.</h2><p>Associados da SBMH têm condições especiais para integrar a Undersea and Hyperbaric Medical Society, ampliando o acesso à produção científica e à comunidade internacional da especialidade.</p><a href={`${official}/parceria-entre-a-sbmh-e-a-uhms/`} target="_blank" rel="noreferrer">Conheça o benefício <Arrow /></a></div>
+          <div><p className={styles.sectionLabel}>Conexão internacional</p><h2>Parceria entre a SBMH e a UHMS.</h2><p>Associados da SBMH têm condições especiais para integrar a Undersea and Hyperbaric Medical Society, ampliando o acesso à produção científica e à comunidade internacional da especialidade.</p><a href={`${official}/area-do-associado/desconto-uhms/`} target="_blank" rel="noreferrer">Conheça o benefício <Arrow /></a></div>
         </div>
       </section>
 
@@ -246,7 +357,16 @@ export default function SbmhProposal() {
       <section className={styles.proposal} id="proposta">
         <div className={`${styles.shell} ${styles.proposalGrid}`}>
           <div><span>Proposta Softaliza</span><h2>Um portal mais claro, confiável e integrado para a SBMH.</h2></div>
-          <div><p>Este MVP demonstra a nova experiência pública e a área do associado. A versão final pode integrar cadastro, anuidades, cursos, certificados, diretório de profissionais, documentos técnicos e comunicação em uma única plataforma.</p><a href="mailto:comercial@softaliza.com.br?subject=Proposta%20de%20portal%20SBMH">Conversar sobre o projeto <Arrow /></a></div>
+          <div>
+            <p>Esta demonstração corresponde ao <strong>site institucional sob medida</strong> da proposta enviada à Secretaria Executiva: conteúdo publicado pela própria equipe da SBMH, em CMS de código aberto, hospedado em contas da Sociedade.</p>
+            <p>Somado ao <strong>Plano Premium</strong>, a área do associado sai do sistema atual e passa a ser nativa: carteira digital, anuidade por PIX, boleto ou cartão, certificados, Academy para os cursos e gestão de eventos com submissão e avaliação científica — no mesmo lugar do site.</p>
+            <ul className={styles.proposalList}>
+              <li>Sem multa, sem fidelidade e sem bloqueio técnico</li>
+              <li>Domínio, código, banco e listas em nome da SBMH</li>
+              <li>Exportação integral dos dados a qualquer momento</li>
+            </ul>
+            <a href="mailto:comercial@softaliza.com.br?subject=Proposta%20de%20portal%20SBMH">Conversar sobre o projeto <Arrow /></a>
+          </div>
         </div>
       </section>
 
@@ -254,8 +374,8 @@ export default function SbmhProposal() {
         <div className={`${styles.shell} ${styles.footerGrid}`}>
           <div><Brand light /><p>Excelência científica, técnica e ética na Medicina Marítima e Hiperbárica.</p></div>
           <div><h2>Institucional</h2><a href="#sociedade">Sobre a SBMH</a><a href={`${official}/sobre/diretoria-conselhos-e-comissoes/`}>Diretoria e conselhos</a><a href={`${official}/sobre/estatuto-sbmh/`}>Estatuto</a><a href="#noticias">Notícias</a></div>
-          <div><h2>Medicina Hiperbárica</h2><a href="#medicina">O que é</a><a href="#indicacoes">Indicações</a><a href="#encontre">Clínicas e médicos</a><a href="#duvidas">Dúvidas frequentes</a></div>
-          <div><h2>Associados</h2><a href={memberArea}>Área do associado</a><a href={`${memberArea}/cadastro`}>Filie-se</a><a href={`${official}/eventos/`}>Cursos e eventos</a><a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`}>Diretrizes</a></div>
+          <div><h2>Medicina Hiperbárica</h2><a href="#medicina">O que é</a><a href="#indicacoes">Indicações</a><a href="#encontre">Clínicas e médicos</a><a href="#biblioteca">Biblioteca</a><a href="#duvidas">Dúvidas frequentes</a></div>
+          <div><h2>Associados</h2><a href={memberArea}>Área do associado</a><a href={`${memberArea}/cadastro`}>Filie-se</a><a href="#agenda">Cursos e eventos</a><a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`}>Diretrizes</a></div>
         </div>
         <div className={`${styles.shell} ${styles.footerBottom}`}><p>© 2026 Sociedade Brasileira de Medicina Marítima e Hiperbárica. Proposta demonstrativa.</p><span>Uma experiência Softaliza</span></div>
       </footer>
