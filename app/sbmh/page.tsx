@@ -28,7 +28,9 @@ export const metadata: Metadata = {
 };
 
 const official = "https://sbmh.com.br";
-const memberArea = "https://sbmh.rpgestor.com";
+// A área do associado da solução proposta é a plataforma Softaliza integrada —
+// nesta demonstração, todos os acessos apontam para o mockup da própria página.
+const memberArea = "#associado";
 
 const indications = [
   ["01", "Feridas complexas", "Apoio no tratamento de feridas crônicas, complicações cirúrgicas e lesões de difícil cicatrização."],
@@ -69,6 +71,14 @@ const agenda = [
     place: "Minas Gerais · MG",
     date: "Turmas divulgadas pela Secretaria",
   },
+];
+
+// As três frentes da especialidade — o briefing exige páginas permanentes
+// para cada uma (seção 2, "Áreas temáticas").
+const fields = [
+  ["01", "Medicina Marítima", "Saúde de quem vive e trabalha no mar: aptidão do trabalhador aquaviário, condições de saúde a bordo e a interface entre a medicina e a operação marítima."],
+  ["02", "Medicina do Mergulho", "Fisiologia e segurança das atividades subaquáticas: aptidão para o mergulho, prevenção e conduta nos acidentes disbáricos."],
+  ["03", "Medicina Hiperbárica", "Oxigenoterapia em câmara hiperbárica: indicações reconhecidas, protocolos de segurança e integração com o cuidado principal do paciente."],
 ];
 
 const library = [
@@ -112,7 +122,7 @@ export default function SbmhProposal() {
       <div className={styles.utilityBar}>
         <div className={styles.shell}>
           <p>Sociedade Brasileira de Medicina Marítima e Hiperbárica</p>
-          <div><a href="tel:+5548999995741">(48) 99999-5741</a><span>•</span><a href="mailto:secretariaexecutiva@sbmh.com.br">secretariaexecutiva@sbmh.com.br</a><a className={styles.utilityMember} href={memberArea} target="_blank" rel="noreferrer">Área do associado</a></div>
+          <div><a href="tel:+5548999995741">(48) 99999-5741</a><span>•</span><a href="mailto:secretariaexecutiva@sbmh.com.br">secretariaexecutiva@sbmh.com.br</a><a className={styles.utilityMember} href={memberArea}>Área do associado</a></div>
         </div>
       </div>
 
@@ -129,8 +139,8 @@ export default function SbmhProposal() {
             <a href="#duvidas">Dúvidas</a>
           </nav>
           <div className={styles.headerActions}>
-            <a className={styles.memberLink} href={memberArea} target="_blank" rel="noreferrer">Área do associado</a>
-            <a className={styles.primaryButton} href={`${memberArea}/cadastro`} target="_blank" rel="noreferrer">Filie-se à SBMH <Arrow /></a>
+            <a className={styles.memberLink} href={memberArea}>Área do associado</a>
+            <a className={styles.primaryButton} href={memberArea}>Filie-se à SBMH <Arrow /></a>
           </div>
           <details className={styles.mobileMenu}>
             <summary>Menu</summary>
@@ -168,7 +178,7 @@ export default function SbmhProposal() {
           <a href="#encontre"><span className={styles.quickIcon}>⌖</span><div><strong>Encontre clínicas e médicos</strong><small>Busca por estado e cidade</small></div><Arrow diagonal /></a>
           <a href="#indicacoes"><span className={styles.quickIcon}>+</span><div><strong>Indicações médicas</strong><small>Quando a OHB é recomendada</small></div><Arrow diagonal /></a>
           <a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`} target="_blank" rel="noreferrer"><span className={styles.quickIcon}>≡</span><div><strong>Diretrizes da OHB</strong><small>Documentos e referências</small></div><Arrow diagonal /></a>
-          <a href={memberArea} target="_blank" rel="noreferrer"><span className={styles.quickIcon}>ID</span><div><strong>Área do associado</strong><small>Anuidade, cadastro e benefícios</small></div><Arrow diagonal /></a>
+          <a href={memberArea}><span className={styles.quickIcon}>ID</span><div><strong>Área do associado</strong><small>Anuidade, cadastro e benefícios</small></div><Arrow diagonal /></a>
         </div>
       </section>
 
@@ -190,6 +200,23 @@ export default function SbmhProposal() {
           <article><span>02</span><i className={styles.valueCircle} /><h3>Segurança assistencial</h3><p>Boas práticas para médicos, clínicas e pacientes em todo o país.</p></article>
           <article><span>03</span><i className={styles.valueCircle} /><h3>Defesa profissional</h3><p>Representação qualificada e reconhecimento da área de atuação.</p></article>
           <article><span>04</span><i className={styles.valueCircle} /><h3>Informação responsável</h3><p>Conteúdo claro para apoiar profissionais, pacientes e familiares.</p></article>
+        </div>
+      </section>
+
+      <section className={styles.fields} id="areas">
+        <div className={`${styles.shell} ${styles.sectionHeading} ${styles.darkHeading}`}>
+          <div><p className={styles.sectionLabel}>Áreas de atuação</p><h2>Três frentes, uma <em>especialidade.</em></h2></div>
+          <p className={styles.fieldsNote}>Cada área ganha página permanente no novo portal, mantida pela própria Secretaria.</p>
+        </div>
+        <div className={`${styles.shell} ${styles.fieldsGrid}`}>
+          {fields.map(([number, title, text]) => (
+            <article key={number}>
+              <span>{number}</span>
+              <div className={styles.fieldSymbol} aria-hidden="true"><i /><i /><i /></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -306,16 +333,35 @@ export default function SbmhProposal() {
         </div>
       </section>
 
+      <section className={styles.oxi} id="oxigenoticias">
+        <div className={`${styles.shell} ${styles.oxiCard}`}>
+          <div className={styles.oxiCopy}>
+            <p className={styles.sectionLabel}>Newsletter oficial</p>
+            <h2><em>Oxigenotícias</em>, direto da Secretaria.</h2>
+            <p>A newsletter da SBMH passa a ser produzida e enviada pela própria equipe: template fixo e reutilizável, listas segmentadas — associados, não associados, diretoria — e relatório de abertura por edição.</p>
+          </div>
+          <form className={styles.oxiForm} action="#oxigenoticias">
+            <label htmlFor="oxi-email">Receba as próximas edições</label>
+            <div>
+              <input id="oxi-email" type="email" placeholder="seu@email.com.br" />
+              <button type="submit">Assinar <Arrow /></button>
+            </div>
+            <small>Confirmação por duplo opt-in e descadastro em um clique, em todos os envios.</small>
+          </form>
+        </div>
+      </section>
+
       <section className={styles.membership} id="associado">
         <div className={`${styles.shell} ${styles.membershipGrid}`}>
           <div className={styles.membershipCopy}>
             <p className={`${styles.sectionLabel} ${styles.lightLabel}`}>Para associados</p>
             <h2>Uma sociedade forte para uma especialidade cada vez mais reconhecida.</h2>
             <p>Filie-se à SBMH e tenha acesso a uma rede nacional comprometida com ciência, segurança, formação e representação profissional.</p>
-            <ul><li><span>✓</span> Condições especiais em cursos e eventos</li><li><span>✓</span> Parceria internacional com a UHMS</li><li><span>✓</span> Acesso a diretrizes e conteúdos exclusivos</li><li><span>✓</span> Presença no diretório de médicos e clínicas</li></ul>
-            <a className={styles.whiteButton} href={`${memberArea}/cadastro`} target="_blank" rel="noreferrer">Quero me filiar <Arrow /></a>
+            <ul><li><span>✓</span> Carteirinha digital e anuidade por PIX, boleto ou cartão</li><li><span>✓</span> Condições especiais em cursos e eventos</li><li><span>✓</span> Parceria internacional com a UHMS</li><li><span>✓</span> Acesso a diretrizes e conteúdos exclusivos</li><li><span>✓</span> Presença no diretório de médicos e clínicas</li></ul>
+            <a className={styles.whiteButton} href="#proposta">Quero me filiar <Arrow /></a>
           </div>
 
+          <div className={styles.dashboardWrap}>
           <div className={styles.dashboard}>
             <div className={styles.dashboardTop}><Brand light compact /><span>Olá, Dr. Marcelo <i>MS</i></span></div>
             <div className={styles.dashboardBody}>
@@ -323,6 +369,8 @@ export default function SbmhProposal() {
               <div className={styles.dashboardCards}><article><span>Anuidade 2026</span><strong>Em dia</strong><small>Comprovante disponível</small></article><article><span>Próxima formação</span><strong>Atualização em OHB</strong><small>Inscrições abertas</small></article></div>
               <div className={styles.dashboardMenu}><a href={memberArea}><span>01</span>Carteirinha digital<Arrow /></a><a href={memberArea}><span>02</span>Certificados e eventos<Arrow /></a><a href={memberArea}><span>03</span>Documentos exclusivos<Arrow /></a><a href={memberArea}><span>04</span>Atualizar perfil profissional<Arrow /></a></div>
             </div>
+          </div>
+          <p className={styles.dashboardCaption}>Área do associado nativa — plataforma Softaliza com a identidade da SBMH, no mesmo lugar do site.</p>
           </div>
         </div>
       </section>
@@ -358,8 +406,8 @@ export default function SbmhProposal() {
         <div className={`${styles.shell} ${styles.proposalGrid}`}>
           <div><span>Proposta Softaliza</span><h2>Um portal mais claro, confiável e integrado para a SBMH.</h2></div>
           <div>
-            <p>Esta demonstração corresponde ao <strong>site institucional sob medida</strong> da proposta enviada à Secretaria Executiva: conteúdo publicado pela própria equipe da SBMH, em CMS de código aberto, hospedado em contas da Sociedade.</p>
-            <p>Somado ao <strong>Plano Premium</strong>, a área do associado sai do sistema atual e passa a ser nativa: carteira digital, anuidade por PIX, boleto ou cartão, certificados, Academy para os cursos e gestão de eventos com submissão e avaliação científica — no mesmo lugar do site.</p>
+            <p>Esta demonstração é o <strong>novo site institucional da SBMH</strong>: conteúdo publicado pela própria Secretaria, em CMS de código aberto, hospedado em contas da Sociedade.</p>
+            <p>Ele é entregue como <strong>solução completa</strong>, junto com a plataforma Softaliza no lugar do sistema atual: área do associado, carteirinha digital, anuidade por PIX, boleto ou cartão, votações online, cursos e eventos — nos planos <strong>Avançado</strong> ou <strong>Premium</strong>, que soma a submissão e avaliação científica de trabalhos e a Academy para os cursos.</p>
             <ul className={styles.proposalList}>
               <li>Sem multa, sem fidelidade e sem bloqueio técnico</li>
               <li>Domínio, código, banco e listas em nome da SBMH</li>
@@ -375,7 +423,7 @@ export default function SbmhProposal() {
           <div><Brand light /><p>Excelência científica, técnica e ética na Medicina Marítima e Hiperbárica.</p></div>
           <div><h2>Institucional</h2><a href="#sociedade">Sobre a SBMH</a><a href={`${official}/sobre/diretoria-conselhos-e-comissoes/`}>Diretoria e conselhos</a><a href={`${official}/sobre/estatuto-sbmh/`}>Estatuto</a><a href="#noticias">Notícias</a></div>
           <div><h2>Medicina Hiperbárica</h2><a href="#medicina">O que é</a><a href="#indicacoes">Indicações</a><a href="#encontre">Clínicas e médicos</a><a href="#biblioteca">Biblioteca</a><a href="#duvidas">Dúvidas frequentes</a></div>
-          <div><h2>Associados</h2><a href={memberArea}>Área do associado</a><a href={`${memberArea}/cadastro`}>Filie-se</a><a href="#agenda">Cursos e eventos</a><a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`}>Diretrizes</a></div>
+          <div><h2>Associados</h2><a href={memberArea}>Área do associado</a><a href={memberArea}>Filie-se</a><a href="#agenda">Cursos e eventos</a><a href={`${official}/sobre/diretrizes-de-utilizacao-da-ohb/`}>Diretrizes</a></div>
         </div>
         <div className={`${styles.shell} ${styles.footerBottom}`}><p>© 2026 Sociedade Brasileira de Medicina Marítima e Hiperbárica. Proposta demonstrativa.</p><span>Uma experiência Softaliza</span></div>
       </footer>
