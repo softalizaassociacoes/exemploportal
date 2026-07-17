@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Proposta visual preparada pela Softaliza para a Sociedade Brasileira de Medicina Marítima e Hiperbárica.",
     type: "website",
     locale: "pt_BR",
-    url: "https://exemploportal.vercel.app/sbmh",
+    url: "https://exemplo.softaliza.com.br/sbmh",
     siteName: "Proposta Softaliza — SBMH",
     images: [{ url: "/sbmh/og.png", width: 1200, height: 630, alt: "MVP do novo portal da SBMH — proposta Softaliza" }],
   },

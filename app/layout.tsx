@@ -8,7 +8,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://exemploportal.vercel.app"),
+  metadataBase: new URL("https://exemplo.softaliza.com.br"),
   title: "Exemplo Portal Softaliza — Modelos para grandes associações",
   description: "Portal único de demonstrações da Softaliza, com propostas personalizadas por associação.",
   // Demonstrações comerciais reproduzem marca e conteúdo de entidades reais:
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description: "Portal demonstrativo com propostas personalizadas por associação.",
     type: "website",
     locale: "pt_BR",
-    url: "https://exemploportal.vercel.app",
+    url: "https://exemplo.softaliza.com.br",
     siteName: "Exemplo Portal Softaliza",
     images: [{
       url: "/og.png",
